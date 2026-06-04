@@ -38,7 +38,7 @@ export const validateExpenseId = async (req: Request, res: Response, next: NextF
 export const validateExpenseExists = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { expenseId } = req.params
-        const expense = await Expense.findByPk(expenseId)
+        const expense = await Expense.findByPk(Number(expenseId))
         
         if (!expense) {
             const error = new Error('Gasto no encontrado')
