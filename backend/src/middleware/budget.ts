@@ -2,7 +2,6 @@ import type { Request, Response, NextFunction } from "express";
 import { body, param, validationResult } from "express-validator";
 import Budget from "../models/Budget";
 
-// Agrega a la interface REQUEST una nueva propiedad permitida: BUDGET 
 declare global {
     namespace Express {
         interface Request {
@@ -29,7 +28,6 @@ export const validateBudgetExists = async (req: Request, res: Response, next: Ne
     try {
         const { budgetId } = req.params
         
-        // SOLUCIÓN: Convertimos a Number para que TypeScript sepa que es un identificador numérico único válido
         const budget = await Budget.findByPk(Number(budgetId))
         
         if (!budget) {
