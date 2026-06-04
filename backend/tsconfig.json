@@ -18,5 +18,10 @@
     },
     "include": [
         "src/**/*.ts"
-    ]
+    ],
+    "exclude": [
+    "node_modules",
+    "dist",
+    "src/tests/**/*" // <-- AGREGA ESTA LÍNEA EXACTA
+  ]
 }
