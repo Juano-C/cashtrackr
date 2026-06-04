@@ -1,20 +1,27 @@
 import { createRequest, createResponse } from 'node-mocks-http'
+import { describe, it, beforeEach, jest, expect } from "@jest/globals";
 import { hasAccess, validateBudgetExists } from '../../../middleware/budget'
 import Budget from '../../../models/Budget'
 import { budgets } from '../../mocks/budgets'
 
-// Crea un mock (simulación) del modelo Budget
-// Esto evita que las pruebas interactúen con la base de datos real
-jest.mock('../../../models/Budget', () => {
-    return {
+// 🛠️ CORREGIDO: Usamos la fábrica explícita para que TypeScript y Sequelize no se confundan en el entorno de pruebas
+jest.mock('../../../models/Budget', () => ({
+    __esModule: true,
+    default: {
         findByPk: jest.fn()
     }
-})
+}));
 
 // Grupo de pruebas para middleware de presupuesto validateBudgetExists
 describe('budget Middleware - validateBudgetExists', () => {
+    
+    beforeEach(() => {
+        jest.resetAllMocks(); // Limpia los mocks antes de cada test
+    });
+
     it('should handle non-existent budget', async () => {
-        (Budget.findByPk as jest.Mock).mockResolvedValue(null)
+        // 🛠️ LÍNEA 18 CORREGIDA: Usamos jest.mocked limpio
+        jest.mocked(Budget.findByPk).mockResolvedValue(null);
 
         const req = createRequest({
             params: {
@@ -33,7 +40,8 @@ describe('budget Middleware - validateBudgetExists', () => {
     })
 
     it('should proceed to next middleware if budget exists', async () => {
-        (Budget.findByPk as jest.Mock).mockResolvedValue(budgets[0])
+        // 🛠️ LÍNEA 37 CORREGIDA: Usamos jest.mocked con el mock de tus datos
+        jest.mocked(Budget.findByPk).mockResolvedValue(budgets[0] as any as Budget);
 
         const req = createRequest({
             params: {
@@ -50,7 +58,7 @@ describe('budget Middleware - validateBudgetExists', () => {
 
     it('should handle internal server error', async () => {
         // Rejected simula un error en la base de datos para que vaya al catch
-        (Budget.findByPk as jest.Mock).mockRejectedValue(new Error())
+        jest.mocked(Budget.findByPk).mockRejectedValue(new Error())
 
         const req = createRequest({
             params: {

@@ -5,7 +5,7 @@ import { db } from './config/db'
 import budgetRouter from './routes/budgetRouter'
 import authRouter from './routes/authRouter'
 
-async function connectDB() {
+export async function connectDB() {
     try {
         await db.authenticate()
         db.sync()
@@ -24,5 +24,9 @@ app.use(express.json())
 
 app.use('/api/budgets', budgetRouter) // Rutas de presupuesto
 app.use('/api/auth', authRouter) // Rutas de autenticacion
+
+app.get('/', (req, res) => {
+    res.send('Todo bien')
+})
 
 export default app

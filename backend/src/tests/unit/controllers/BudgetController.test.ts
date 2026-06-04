@@ -171,11 +171,13 @@ describe('BudgetController.getById', () => {
     })
 
     it('Should return a budget  with ID 1 and 3 expenses', async () => {
+        const budgetId = 1;
+
         // Crea un Request HTTP simulada
         const req = createRequest({
             method: 'GET',
             url: '/api/budgets/:budgetId',
-            budget: { id: 1 }
+            budget: { id: budgetId }
         })
 
         // Crea un Response HTTP simulada
@@ -187,7 +189,7 @@ describe('BudgetController.getById', () => {
         const data = res._getJSONData()
         expect(res.statusCode).toBe(200)
         expect(data.expenses).toHaveLength(3)
-        expect(Budget.findByPk).toHaveBeenCalledWith(req.budget.id, { include: [Expenses] })
+        expect(Budget.findByPk).toHaveBeenCalledWith(budgetId, { include: [Expenses] })
     })
 
     it('Should return a budget  with ID 2 and 2 expenses', async () => {

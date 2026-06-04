@@ -2,7 +2,7 @@ import { createRequest, createResponse } from "node-mocks-http";
 import { validateExpenseExists } from "../../../middleware/expense";
 import Expense from '../../../models/Expense'
 import { expenses } from "../../mocks/expenses";
-import { describe, it, beforeEach, jest } from "@jest/globals";
+import { describe, it, beforeEach, jest, expect } from "@jest/globals";
 import { hasAccess } from "../../../middleware/budget";
 
 jest.mock('../../../models/Expense', () => ({
