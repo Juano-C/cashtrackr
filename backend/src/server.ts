@@ -9,10 +9,8 @@ async function connectDB() {
     try {
         await db.authenticate()
         db.sync()
-        // db.sync({ alter: true })
         console.log(colors.blue.bold('Conexion exitosa a DB'))
     } catch (error) {
-        // console.log(error)
         console.log(colors.red.bold('Fallo la conexion a la DB'))
     }
 }
@@ -27,4 +25,4 @@ app.use(express.json())
 app.use('/api/budgets', budgetRouter) // Rutas de presupuesto
 app.use('/api/auth', authRouter) // Rutas de autenticacion
 
-export default app 
+export default app
