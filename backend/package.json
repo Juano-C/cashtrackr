@@ -8,6 +8,8 @@
     "dev:api": "nodemon src/index.ts --api",
     "build": "tsc",
     "start": "node ./dist/index.js",
+    "db:check": "ts-node src/data/checkConnection.ts",
+    "db:setup": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/setup-local-db.ps1",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "pretest": "ts-node ./src/data/index.ts --clear"
